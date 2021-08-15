@@ -1,51 +1,64 @@
+import React from "react";
+import AddNewTodo from "./AddNewTodo";
+import Toggle from "./Toggle";
+import TodoList from "./TodoList";
+import Footer from "./Footer";
+
 import "./App.css";
 
-function App() {
-  return (
-    <div className="todoapp">
-      <header className="header">
-        <h1>todos</h1>
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus
-        />
-      </header>
-      <div className="main">
-        <input id="toggle-all" className="toggle-all" type="checkbox" />
-        <label htmlFor="toggle-all">Mark all as complete</label>
-        <ul className="todo-list">
-          <li className="completed">
-            <div className="view">
-              <input className="toggle" type="checkbox" />
-              <label>Taste JavaScript</label>
-              <button className="destroy"></button>
-            </div>
-            <input className="edit" />
-          </li>
-        </ul>
+const todoItems = [
+  {
+    id: 887258856,
+    title: "React training",
+    completed: false,
+  },
+  {
+    id: 887258866,
+    title: "Go for a run",
+    completed: true,
+  },
+  {
+    id: 887258876,
+    title: "Listen to some music",
+    completed: true,
+  },
+];
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: todoItems,
+    };
+  }
+  handleAddTodo = (title) => {
+    const newTodo = {
+      id: Math.floor(Math.random() * 10000),
+      title,
+      completed: false
+    }
+    const todos = [...this.state.todos, newTodo]
+
+    this.setState({
+      todos
+    })
+  };
+
+  render() {
+    return (
+      <div className="todoapp">
+        <header className="header">
+          <h1>todos</h1>
+          <AddNewTodo onAddTodo={this.handleAddTodo} />
+        </header>
+        <div className="main">
+          <Toggle />
+          <TodoList todoItems={this.state.todos} />
+        </div>
+        <Footer />
       </div>
-      <div className="footer">
-        <span className="todo-count">
-          <strong>0</strong> item left
-        </span>
-        <ul className="filters">
-          <li>
-            <a className="selected" href="#/">
-              All
-            </a>
-          </li>
-          <li>
-            <a href="#/active">Active</a>
-          </li>
-          <li>
-            <a href="#/completed">Completed</a>
-          </li>
-        </ul>
-        <button className="clear-completed">Clear completed</button>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
