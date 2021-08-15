@@ -44,6 +44,37 @@ class App extends React.Component {
     })
   };
 
+  handleOnDeleteTodo = todo => {
+    const todos = this.state.todos.filter(todoItem => todoItem.id !== todo.id)
+    this.setState({
+      todos
+    })
+  }
+
+  handleUpdateTodo = (title, todo) => {
+    const todos = this.state.todos.map(todoItem => {
+      if(todoItem.id === todo.id){
+        return {...todoItem, title}
+      }else{
+        return todoItem
+      }
+    })
+
+    this.setState({ todos })
+  }
+
+  handleToggleStatus = (checkedValue, todo) => {
+    const todos = this.state.todos.map(todoItem => {
+      if(todoItem.id === todo.id){
+        return {...todoItem, completed: checkedValue}
+      }else{
+        return todoItem
+      }
+    })
+
+    this.setState({todos})
+  }
+
   render() {
     return (
       <div className="todoapp">
@@ -53,7 +84,12 @@ class App extends React.Component {
         </header>
         <div className="main">
           <Toggle />
-          <TodoList todoItems={this.state.todos} />
+          <TodoList
+             todoItems={this.state.todos}
+             onDeleteTodo={this.handleOnDeleteTodo}
+             onUpdateTodo={this.handleUpdateTodo}
+             onStatusToggled={this.handleToggleStatus}
+          />
         </div>
         <Footer />
       </div>
