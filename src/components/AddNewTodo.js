@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { useState } from "react";
 
-const AddNewTodo = () => {
-    return (
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus
-        />
-    )
-}
+const AddNewTodo = ({onAddTodo}) => {
+  const [title,setTitle] = useState('')
 
-export default AddNewTodo
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onAddTodo(title);
+      setTitle('')
+    }
+  };
+
+  return (
+    <input
+      className="new-todo"
+      placeholder="What needs to be done?"
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+      onKeyDown={handleEnter}
+      autoFocus
+    />
+  );
+};
+
+export default AddNewTodo;
