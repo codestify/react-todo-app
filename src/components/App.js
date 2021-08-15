@@ -6,6 +6,27 @@ import Footer from './Footer';
 
 import "./App.css";
 
+const todoItems = [
+
+  {
+      "id": 887258856,
+      "title": "React training",
+      "completed": false,
+  },
+  {
+      "id": 887258866,
+      "title": "Go for a run",
+      "completed": true,
+  },
+  {
+      "id": 887258876,
+      "title": "Listen to some music",
+      "completed": true,
+  }
+
+];
+
+
 function App() {
   return (
     <div className="todoapp">
@@ -15,7 +36,7 @@ function App() {
       </header>
       <div className="main">
         <Toggle />
-        <TodoList />
+        <TodoList todoItems={todoItems} />
       </div>
      <Footer />
     </div>
