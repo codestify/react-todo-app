@@ -4,23 +4,18 @@ import AddNewTodo from "./AddNewTodo";
 import Toggle from "./Toggle";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
+import {fetchTodos} from "../actions";
 import "./App.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: props.todos,
-      filter: props.filter,
-    };
-  }
+
   handleAddTodo = (title) => {
     const newTodo = {
       id: Math.floor(Math.random() * 10000),
       title,
       completed: false,
     };
-    const todos = [...this.state.todos, newTodo];
+    const todos = [...this.props.todos, newTodo];
 
     this.setState({
       todos,
@@ -28,7 +23,7 @@ class App extends React.Component {
   };
 
   handleOnDeleteTodo = (todo) => {
-    const todos = this.state.todos.filter(
+    const todos = this.props.todos.filter(
       (todoItem) => todoItem.id !== todo.id
     );
     this.setState({
@@ -37,7 +32,7 @@ class App extends React.Component {
   };
 
   handleUpdateTodo = (title, todo) => {
-    const todos = this.state.todos.map((todoItem) => {
+    const todos = this.props.todos.map((todoItem) => {
       if (todoItem.id === todo.id) {
         return { ...todoItem, title };
       } else {
@@ -49,7 +44,7 @@ class App extends React.Component {
   };
 
   handleToggleStatus = (checkedValue, todo) => {
-    const todos = this.state.todos.map((todoItem) => {
+    const todos = this.props.todos.map((todoItem) => {
       if (todoItem.id === todo.id) {
         return { ...todoItem, completed: checkedValue };
       } else {
@@ -61,7 +56,7 @@ class App extends React.Component {
   };
 
   handleToggleAll = (checkedValue) => {
-    const todos = this.state.todos;
+    const todos = this.props.todos;
     todos.map((todo) => (todo.completed = checkedValue));
     this.setState({ todos });
   };
@@ -71,21 +66,25 @@ class App extends React.Component {
   };
 
   filteredTodos = () => {
-    const { filter } = this.state;
+    const { filter, todos } = this.props;
     switch (filter) {
       case "active":
       case "clear":
-        return this.state.todos.filter((todo) => todo.completed === false);
+        return todos.filter((todo) => todo.completed === false);
       case "completed":
-        return this.state.todos.filter((todo) => todo.completed === true);
+        return todos.filter((todo) => todo.completed === true);
       case "all":
       default:
-        return this.state.todos;
+        return todos;
     }
   };
 
   getCount = () => {
-    return this.state.todos.filter(todo => todo.completed === false).length
+    return this.props.todos.filter(todo => todo.completed === false).length
+  }
+
+  componentDidMount() {
+    this.props.loadTodos()
   }
 
   render() {
@@ -93,7 +92,7 @@ class App extends React.Component {
       <div className="todoapp">
         <header className="header">
           <h1>todos</h1>
-          <AddNewTodo onAddTodo={this.handleAddTodo} />
+          <AddNewTodo />
         </header>
         <div className="main">
           <Toggle onToggleAll={this.handleToggleAll} />
@@ -117,4 +116,8 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+   loadTodos: () => dispatch(fetchTodos())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

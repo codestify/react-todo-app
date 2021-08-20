@@ -1,38 +1,23 @@
-import { FETCH_TODOS } from "../actions";
+import {CREATE_TODO, FETCH_TODOS} from "../actions";
 
 const initialState = {
-    todos : [
-        {
-          id: 887258856,
-          title: "React training",
-          completed: false,
-        },
-        {
-          id: 887258866,
-          title: "Go for a run",
-          completed: true,
-        },
-        {
-          id: 887258876,
-          title: "Listen to some music",
-          completed: true,
-        },
-    ],
+    todos: [],
     filter: 'all'
 }
 
-const todosReducer = (state = initialState.todos , action) => {
-  const { type, payload } = action;
+const todosReducer = (state = initialState.todos, action) => {
+    const {type, payload} = action;
 
-  switch (type) {
-    case FETCH_TODOS: {
-      return {
-        todos: [...state, ...payload.todos],
-      };
+    switch (type) {
+        case FETCH_TODOS: {
+            return [...state, ...payload.todos]
+        }
+        case CREATE_TODO: {
+            return [...state, payload.todo]
+        }
+        default:
+            return state;
     }
-    default:
-      return state;
-  }
 };
 
 export default todosReducer
