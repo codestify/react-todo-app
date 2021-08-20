@@ -1,35 +1,17 @@
 import React from "react";
+import {connect} from 'react-redux';
 import AddNewTodo from "./AddNewTodo";
 import Toggle from "./Toggle";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
-
 import "./App.css";
-
-const todoItems = [
-  {
-    id: 887258856,
-    title: "React training",
-    completed: false,
-  },
-  {
-    id: 887258866,
-    title: "Go for a run",
-    completed: true,
-  },
-  {
-    id: 887258876,
-    title: "Listen to some music",
-    completed: true,
-  },
-];
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: todoItems,
-      filter: "all",
+      todos: props.todos,
+      filter: props.filter,
     };
   }
   handleAddTodo = (title) => {
@@ -128,4 +110,11 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todos : state.todos,
+    filter: state.filter
+  }
+}
+
+export default connect(mapStateToProps)(App);
