@@ -1,4 +1,6 @@
 import React,{useState} from "react";
+import {connect } from 'react-redux'
+import {toggleAll} from "../actions";
 
 function Toggle({onToggleAll}) {
   const [toggle, setToggle] = useState(false)
@@ -23,4 +25,8 @@ function Toggle({onToggleAll}) {
   );
 }
 
-export default Toggle;
+const mapDispatchToProps = dispatch => ({
+    onToggleAll: (checkedValue) => dispatch(toggleAll(checkedValue))
+})
+
+export default connect(null, mapDispatchToProps) (Toggle);

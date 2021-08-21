@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux'
-import {showActiveTodos, showCompletedTodos, showAllTodos} from "../actions";
+import {showActiveTodos, showCompletedTodos, showAllTodos, clearCompletedTodos} from "../actions";
 
 const Footer = (props) => {
 
@@ -26,7 +26,7 @@ const Footer = (props) => {
                     <a href="#/completed" className={props.filter === 'completed' ? 'selected' : ''} onClick={() => props.showCompletedTodos()}>Completed</a>
                 </li>
             </ul>
-            {/*<button className="clear-completed" onClick={() => handleFilter('clear')}>Clear completed</button>*/}
+            <button className="clear-completed" onClick={() => props.clearCompiledTodos()}>Clear completed</button>
         </div>
     );
 };
@@ -39,7 +39,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     showActiveTodos : () => dispatch(showActiveTodos()),
     showCompletedTodos: () => dispatch(showCompletedTodos()),
-    showAllTodos: () => dispatch(showAllTodos())
+    showAllTodos: () => dispatch(showAllTodos()),
+    clearCompiledTodos: () => dispatch(clearCompletedTodos())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

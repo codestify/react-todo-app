@@ -1,6 +1,8 @@
 import React, {useState} from "react";
+import { connect } from 'react-redux';
+import {deleteTodo, toggleStatus, updateTodo} from "../actions";
 
-const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled }) => {
+const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled,  }) => {
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(todo.title)
 
@@ -37,7 +39,7 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled }) => {
            onChange={handleOnChecked}
         />
         <label>{todo.title}</label>
-        <button className="destroy" onClick={(e) => handleDelete(todo)}></button>
+        <button className="destroy" onClick={(e) => handleDelete(todo)} />
       </div>
       <form onSubmit={handleSubmit}>
         <input
@@ -51,4 +53,10 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled }) => {
   );
 };
 
-export default TodoItem;
+const mapDispatchToProps = dispatch => ({
+  onDeleteTodo : todo => dispatch(deleteTodo(todo)),
+  onUpdateTodo : (title, todo) => dispatch(updateTodo(title, todo)),
+  onStatusToggled: (checkedValue, todo) => dispatch(toggleStatus(checkedValue, todo)),
+})
+
+export default connect(null, mapDispatchToProps)(TodoItem);
