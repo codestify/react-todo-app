@@ -103,7 +103,7 @@ class App extends React.Component {
             onStatusToggled={this.handleToggleStatus}
           />
         </div>
-        <Footer onHandleFilter={this.handleFilter} count={this.getCount()}/>
+        <Footer />
       </div>
     );
   }
