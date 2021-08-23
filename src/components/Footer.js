@@ -1,31 +1,46 @@
 import React from "react";
+import {connect} from 'react-redux'
+import {showActiveTodos, showCompletedTodos, showAllTodos, clearCompletedTodos} from "../actions";
 
-const Footer = ({onHandleFilter, count}) => {
+const Footer = (props) => {
 
-  const handleFilter = (filter) => {
-    onHandleFilter(filter)
-  }
-  return (
-    <div className="footer">
+    const getCount = () => {
+        return props.todos.filter(todo => todo.completed === false).length
+    }
+
+    return (
+        <div className="footer">
       <span className="todo-count">
-        <strong>{count}</strong> item left
+        <strong>{getCount()}</strong> item left
       </span>
-      <ul className="filters">
-        <li>
-          <a className="selected" href="#/" onClick={() => handleFilter('all')}>
-            All
-          </a>
-        </li>
-        <li>
-          <a href="#/active" onClick={() => handleFilter('active')}>Active</a>
-        </li>
-        <li>
-          <a href="#/completed" onClick={() => handleFilter('completed')}>Completed</a>
-        </li>
-      </ul>
-      <button className="clear-completed" onClick={() => handleFilter('clear')}>Clear completed</button>
-    </div>
-  );
+            <ul className="filters">
+                <li>
+                    <a className={props.filter === 'all' ? 'selected' : ''} href="#/all" onClick={() => props.showAllTodos()}>
+                        All
+                    </a>
+                </li>
+                <li>
+                    <a href="#/active" className={props.filter === 'active' ? 'selected' : ''} onClick={() => props.showActiveTodos()}>Active</a>
+                </li>
+                <li>
+                    <a href="#/completed" className={props.filter === 'completed' ? 'selected' : ''} onClick={() => props.showCompletedTodos()}>Completed</a>
+                </li>
+            </ul>
+            <button className="clear-completed" onClick={() => props.clearCompiledTodos()}>Clear completed</button>
+        </div>
+    );
 };
 
-export default Footer;
+const mapStateToProps = state => ({
+    todos: state.todos,
+    filter: state.filter
+})
+
+const mapDispatchToProps = dispatch => ({
+    showActiveTodos : () => dispatch(showActiveTodos()),
+    showCompletedTodos: () => dispatch(showCompletedTodos()),
+    showAllTodos: () => dispatch(showAllTodos()),
+    clearCompiledTodos: () => dispatch(clearCompletedTodos())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
