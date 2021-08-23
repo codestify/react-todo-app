@@ -4,7 +4,7 @@ import AddNewTodo from "./AddNewTodo";
 import Toggle from "./Toggle";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
-import {fetchTodos} from "../actions";
+import {fetchListOfTodos} from "../thunks";
 import "./App.css";
 
 class App extends React.Component {
@@ -52,7 +52,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-   loadTodos: () => dispatch(fetchTodos())
+   loadTodos: () => dispatch(fetchListOfTodos())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

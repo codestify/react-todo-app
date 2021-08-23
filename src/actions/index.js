@@ -10,27 +10,10 @@ export const COMPLETED_TODOS = "COMPLETED_TODOS"
 export const SHOW_ALL = "SHOW_ALL"
 export const CLEAR_COMPLETED_TODOS = "CLEAR_COMPLETED_TODOS"
 
-export const fetchTodos = () => {
-    const apiTodos = [
-        {
-            id: 887258856,
-            title: "React training",
-            completed: false,
-        },
-        {
-            id: 887258866,
-            title: "Go for a run",
-            completed: true,
-        },
-        {
-            id: 887258876,
-            title: "Listen to some music",
-            completed: true,
-        },
-    ];
+export const fetchTodos = (todos) => {
     return {
         type: FETCH_TODOS,
-        payload: {todos: apiTodos},
+        payload: {todos},
     };
 };
 
