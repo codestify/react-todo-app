@@ -11,8 +11,23 @@ class ApiService {
         })
     }
 
-    async fetchListOfTodos(endpoint) {
-        const response = await this.api.get(endpoint)
+    async fetchListOfTodos() {
+        const response = await this.api.get('/api')
+        return await response.data
+    }
+
+    async createNewTodo(todo) {
+        const response = await this.api.post('/api', todo);
+        return await response.data
+    }
+
+    async deleteTodo(todo) {
+        const response = await this.api.delete(todo.url);
+        return await response.data
+    }
+
+    async editTodo(title, todo) {
+        const response = await this.api.patch(todo.url, { title });
         return await response.data
     }
 

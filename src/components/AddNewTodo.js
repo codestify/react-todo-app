@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {createNewTodo} from "../actions";
+import {createNewApiTodo} from "../thunks";
 
 const AddNewTodo = ({onAddTodo}) => {
     const [title, setTitle] = useState('')
@@ -30,7 +30,7 @@ const AddNewTodo = ({onAddTodo}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    onAddTodo: todo => dispatch(createNewTodo(todo))
+    onAddTodo: todo => dispatch(createNewApiTodo(todo))
 })
 
 export default connect(null, mapDispatchToProps)(AddNewTodo);

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { connect } from 'react-redux';
-import {deleteTodo, toggleStatus, updateTodo} from "../actions";
+import {toggleStatus, updateTodo} from "../actions";
+import { deleteApiTodo, editApiTodo } from "../thunks";
 
 const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled,  }) => {
   const [editing, setEditing] = useState(false)
@@ -54,8 +55,8 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo, onStatusToggled,  }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteTodo : todo => dispatch(deleteTodo(todo)),
-  onUpdateTodo : (title, todo) => dispatch(updateTodo(title, todo)),
+  onDeleteTodo : todo => dispatch(deleteApiTodo(todo)),
+  onUpdateTodo : (title, todo) => dispatch(editApiTodo(title, todo)),
   onStatusToggled: (checkedValue, todo) => dispatch(toggleStatus(checkedValue, todo)),
 })
 
